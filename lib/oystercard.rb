@@ -10,7 +10,6 @@ class Oystercard
     @entry_station = nil
     @exit_station = nil
     @journey_history = []
-    # @current_journey = {@entry_station => @exit_station}
   end
 
   def top_up(amount)
