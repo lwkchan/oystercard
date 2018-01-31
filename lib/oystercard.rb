@@ -31,8 +31,8 @@ class Oystercard
     raise "Not yet in journey" unless in_journey?
     deduct(MINIMUM_BALANCE)
     @exit_station = station
-    @journey_history << {:entry_station => @entry_station, :exit_station => @exit_station}
-    @entry_station = nil
+    save_journey
+    reset_stations
   end
 
   private
@@ -46,6 +46,10 @@ class Oystercard
   end
 
   def save_journey
-    @journey_history.push(@current_journey)
+    @journey_history << {:entry_station => @entry_station, :exit_station => @exit_station}
+  end
+
+  def reset_stations
+    @entry_station = nil
   end
 end
