@@ -2,7 +2,7 @@ require 'station'
 
 describe Station do
 
-   subject(:station) {Station.new("name", 1)}
+  subject(:station) {Station.new("name", 1)}
 
 
   it "has a name" do

@@ -1,3 +1,5 @@
+require_relative 'station'
+
 class Oystercard
 
   DEFAULT_BALANCE = 0
@@ -22,6 +24,7 @@ class Oystercard
   end
 
   def touch_in(station)
+    raise "you didn't touch out" if @exit_station == nil 
     raise "Minimum balance not met" if @balance < MINIMUM_BALANCE
     @entry_station = station
   end
