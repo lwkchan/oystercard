@@ -5,14 +5,14 @@ describe Oystercard do
   subject(:oystercard) {described_class.new}
   let(:station) {double('station')}
 
-  context "when new oystercard is initialized with argument" do
+  context "when initialized with argument" do
     let(:oystercard20) { described_class.new(20) }
     it "has balance given" do
       expect(oystercard20.balance).to eq 20
     end
   end
 
-  context "when new oystercard is initialized without argument" do
+  context "when initialized without argument" do
     it "has default balance" do
     expect(oystercard.balance).to eq Oystercard::DEFAULT_BALANCE
     end
@@ -23,15 +23,16 @@ describe Oystercard do
 
   end
 
-  context "when oystercard has minimum balance or more" do
+  context "when it has minimum balance or more" do
     before(:each){oystercard.top_up(Oystercard::MINIMUM_BALANCE)}
 
     describe "#touch_in" do
-      # let(:journey) { double :journey}
       it "creates new object of Journey class" do
       oystercard.touch_in(station)
       expect(oystercard.current_journey).not_to eq nil
       end
+
+
     end
 
     describe "#touch_out" do
@@ -48,13 +49,26 @@ describe Oystercard do
     end
   end
 
-  context "when oystercard does not have minimum balance" do
+  context "when it does not have minimum balance" do
     describe "#touch_in" do
       it "raises an error" do
         error_message = "Minimum balance not met"
         expect { oystercard.touch_in(station) }.to raise_error error_message
       end
     end
+  end
+
+  context "when there is an incomplete journey" do
+    before(:each){oystercard.top_up(Oystercard::MINIMUM_BALANCE)}
+
+    describe "#touch_in" do
+      it "deducts penalty_charge from the balance" do
+        expect {oystercard.touch_in(station)}.to change{oystercard.balance}.by(-Oystercard::PENALTY_CHARGE)
+      end
+    end
+
+
+
   end
 
   describe "#top_up" do
