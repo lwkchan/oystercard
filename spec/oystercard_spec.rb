@@ -1,6 +1,7 @@
 require 'oystercard'
 require 'journey'
 
+
 describe Oystercard do
   subject(:oystercard) {described_class.new}
   let(:station) {double('station')}
@@ -56,19 +57,6 @@ describe Oystercard do
         expect { oystercard.touch_in(station) }.to raise_error error_message
       end
     end
-  end
-
-  context "when there is an incomplete journey" do
-    before(:each){oystercard.top_up(Oystercard::MINIMUM_BALANCE)}
-
-    describe "#touch_in" do
-      it "deducts penalty_charge from the balance" do
-        expect {oystercard.touch_in(station)}.to change{oystercard.balance}.by(-Oystercard::PENALTY_CHARGE)
-      end
-    end
-
-
-
   end
 
   describe "#top_up" do
