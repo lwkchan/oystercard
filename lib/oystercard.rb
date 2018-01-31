@@ -10,7 +10,7 @@ class Oystercard
     @entry_station = nil
     @exit_station = nil
     @journey_history = []
-    @current_journey = {@entry_station => @exit_station}
+    # @current_journey = {@entry_station => @exit_station}
   end
 
   def top_up(amount)
@@ -30,9 +30,9 @@ class Oystercard
   def touch_out(station)
     raise "Not yet in journey" unless in_journey?
     deduct(MINIMUM_BALANCE)
-    @entry_station = nil
     @exit_station = station
-    # create test for save_journey
+    @journey_history << {:entry_station => @entry_station, :exit_station => @exit_station}
+    @entry_station = nil
   end
 
   private

@@ -20,9 +20,6 @@ describe Oystercard do
       expect(oystercard.journey_history).to eq []
     end
 
-    it "has hash of entry and exit stations" do
-      expect(oystercard.current_journey).to be_a(Hash)
-    end
   end
 
   context "when oystercard has minimum balance or more" do
@@ -51,6 +48,12 @@ describe Oystercard do
         oystercard.touch_out(station)
         expect(oystercard.exit_station).to eq station
       end
+
+      it "adds journeys to journey history" do
+        oystercard.touch_out(station)
+        expect(oystercard.journey_history).to include ({:entry_station => station, :exit_station => station})
+      end
+
     end
   end
 
@@ -81,10 +84,14 @@ describe Oystercard do
     end
   end
 
-    describe "#touch_out" do
+  describe "#touch_out" do
     it "raises error if card hasn't been touched in" do
       error_message = "Not yet in journey"
       expect { oystercard.touch_out(station) }.to raise_error error_message
     end
+
+
+
   end
+
 end
