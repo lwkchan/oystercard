@@ -12,7 +12,6 @@ class Oystercard
   def initialize(balance = DEFAULT_BALANCE)
     @balance = balance
     @journey_history = []
-    @current_journey = nil
   end
 
   def top_up(amount)
@@ -25,9 +24,10 @@ class Oystercard
   end
 
   def touch_in(station)
-    @current_journey = Journey.new(station)
-    # raise "you didn't touch out" if @exit_station == nil
     raise "Minimum balance not met" if @balance < MINIMUM_BALANCE
+    store_incomplete_journey
+    # need to charge for the incomplete journey
+    @current_journey = Journey.new(station)
   end
 
   def touch_out(station)
@@ -43,9 +43,7 @@ class Oystercard
   end
 
   def fare
-    p @current_journey.entry_station
-    p @current_journey.exit_station
-    if @current_journey.entry_station == nil && @current_journey.exit_station != nil then
+    if @current_journey.entry_station == nil && @current_journey.exit_station != nil
       6
     else
       MINIMUM_BALANCE
@@ -54,6 +52,18 @@ class Oystercard
 
   def deduct(fare)
     @balance -= fare
+  end
+
+  def store_incomplete_journey
+    if @current_journey != nil
+      #if there is an unfinished current_journey in progress, push it into the journey history
+      if @current_journey.exit_station == nil && @current_journey.entry_station != nil
+        @journey_history << @current_journey
+      elsif @current_journey.exit_station != nil && @current_journey.entry_station == nil
+        @journey_history << @current_journey
+      end
+
+    end
   end
 
   def save_journey

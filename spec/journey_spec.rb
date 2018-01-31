@@ -8,5 +8,4 @@ describe Journey do
     expect(journey.entry_station).to be :entry_station
   end
 
-
 end
