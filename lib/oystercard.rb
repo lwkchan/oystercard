@@ -24,13 +24,12 @@ class Oystercard
   end
 
   def touch_in(station)
-    raise "you didn't touch out" if @exit_station == nil 
+    # raise "you didn't touch out" if @exit_station == nil
     raise "Minimum balance not met" if @balance < MINIMUM_BALANCE
     @entry_station = station
   end
 
   def touch_out(station)
-    raise "Not yet in journey" unless in_journey?
     deduct(MINIMUM_BALANCE)
     @exit_station = station
     save_journey
