@@ -32,7 +32,7 @@ class Oystercard
 
   def touch_out(station)
     @current_journey.exit_station = station
-    deduct(MINIMUM_BALANCE)
+    deduct(fare)
     save_journey
   end
 
@@ -40,6 +40,10 @@ class Oystercard
 
   def limit_reached?(amount)
     (@balance + amount) > DEFAULT_LIMIT
+  end
+
+  def fare
+    MINIMUM_BALANCE
   end
 
   def deduct(fare)
