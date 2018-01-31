@@ -12,7 +12,7 @@ class Oystercard
   def initialize(balance = DEFAULT_BALANCE)
     @balance = balance
     @journey_history = []
-    @current_journey
+    @current_journey = nil
   end
 
   def top_up(amount)
