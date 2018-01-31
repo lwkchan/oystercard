@@ -43,7 +43,13 @@ class Oystercard
   end
 
   def fare
-    MINIMUM_BALANCE
+    p @current_journey.entry_station
+    p @current_journey.exit_station
+    if @current_journey.entry_station == nil && @current_journey.exit_station != nil then
+      6
+    else
+      MINIMUM_BALANCE
+    end
   end
 
   def deduct(fare)
@@ -51,7 +57,7 @@ class Oystercard
   end
 
   def save_journey
-    @journey_history << current_journey
+    @journey_history << @current_journey
   end
 
 end
