@@ -1,6 +1,7 @@
+require 'journey'
+
 describe Journey do
-  # entry station at touch in
-  # exit station at touch out
+
   let(:entry_station) { double('entry station') }
   subject(:journey) {described_class.new(entry_station)}
 
