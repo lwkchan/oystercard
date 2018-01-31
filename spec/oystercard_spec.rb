@@ -1,4 +1,5 @@
 require 'oystercard'
+require 'journey'
 
 describe Oystercard do
   subject(:oystercard) {described_class.new}
@@ -50,8 +51,7 @@ describe Oystercard do
       end
 
       it "adds journeys to journey history" do
-        oystercard.touch_out(station)
-        expect(oystercard.journey_history).to include ({:entry_station => station, :exit_station => station})
+        expect {oystercard.touch_out(station)}.to change{oystercard.journey_history.count}.by 1
       end
 
     end
@@ -84,14 +84,5 @@ describe Oystercard do
     end
   end
 
-  describe "#touch_out" do
-    it "raises error if card hasn't been touched in" do
-      error_message = "Not yet in journey"
-      expect { oystercard.touch_out(station) }.to raise_error error_message
-    end
-
-
-
-  end
 
 end
