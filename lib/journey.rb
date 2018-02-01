@@ -11,17 +11,17 @@ class Journey
   end
 
   def fare
-    if @entry_station == nil && @exit_station != nil
-      PENALTY_CHARGE
-    elsif @entry_station != nil && @exit_station == nil
-      PENALTY_CHARGE
+    if incomplete_journey?
+      PENALTY_FARE
     else
-      MINIMUM_BALANCE
+      BASE_FARE
     end
   end
 
+  def incomplete_journey?
+    return true if @entry_station == nil && @exit_station != nil
+    return true if @entry_station != nil && @exit_station == nil
+    false
+  end
 
-   # The fare method should return the correct fare,
-   # or the penalty fare of 6 if there was either no entry
-   # station or no exit_station.
 end
